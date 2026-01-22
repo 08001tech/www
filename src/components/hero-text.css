@@ -1,0 +1,63 @@
+.hero-text {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    user-select: none;
+}
+
+.hero-content {
+    position: relative;
+    font-size: clamp(1.2rem, 2vw, 1.8rem);
+    font-weight: 300;
+    letter-spacing: 0.5em;
+    color: var(--color-fg);
+    text-transform: uppercase;
+    font-family: var(--font-mono);
+    opacity: 0.95;
+    text-shadow:
+        0 0 20px var(--text-glow-bg),
+        0 0 40px var(--text-glow-bg),
+        0 0 60px var(--text-glow-bg),
+        0 2px 4px var(--text-shadow-strong);
+    transition: color 0.3s ease;
+}
+
+.hero-main {
+    position: relative;
+    z-index: 3;
+    filter: drop-shadow(0 0 8px var(--text-glow-bg));
+}
+
+.hero-glitch {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: color 0.3s ease;
+}
+
+/* Rare, accidental-feeling glitch */
+.hero-content.glitch .hero-glitch:nth-child(2) {
+    opacity: 0.6;
+    color: var(--color-glitch-1);
+    transform: translate(-2px, 1px);
+    mix-blend-mode: screen;
+}
+
+.hero-content.glitch .hero-glitch:nth-child(3) {
+    opacity: 0.6;
+    color: var(--color-glitch-2);
+    transform: translate(2px, -1px);
+    mix-blend-mode: screen;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .hero-content {
+        font-size: clamp(1rem, 3vw, 1.5rem);
+        letter-spacing: 0.4em;
+    }
+}

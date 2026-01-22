@@ -1,0 +1,35 @@
+.grain-container {
+    pointer-events: none;
+    position: fixed;
+    inset: 0;
+    z-index: 10;
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+}
+
+.grain-texture {
+    position: absolute;
+    inset: -200%;
+    height: 400%;
+    width: 400%;
+    background-image: url("/framernoise.png");
+    background-size: 256px 256px;
+    background-position: top left;
+    background-repeat: repeat;
+    opacity: 0.04;
+    mix-blend-mode: overlay;
+    will-change: transform;
+}
+
+/* Adjust opacity for light theme */
+:root[data-theme="light"] .grain-texture {
+    opacity: 0.04;
+}
+
+/* Respect reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+    .grain-texture {
+        will-change: auto;
+    }
+}
