@@ -22,11 +22,6 @@
     will-change: transform;
 }
 
-/* Adjust opacity for light theme */
-:root[data-theme="light"] .grain-texture {
-    opacity: 0.04;
-}
-
 /* Respect reduced motion preference */
 @media (prefers-reduced-motion: reduce) {
     .grain-texture {

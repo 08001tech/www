@@ -25,13 +25,6 @@ export const GlyphBackground = () => {
     width: typeof window !== "undefined" ? window.innerWidth : 0,
     height: typeof window !== "undefined" ? window.innerHeight : 0,
   }));
-  const [theme, setTheme] = useState<"light" | "dark">(() => {
-    if (typeof window === "undefined") return "dark";
-    const isDark =
-      !document.documentElement.hasAttribute("data-theme") ||
-      document.documentElement.getAttribute("data-theme") !== "light";
-    return isDark ? "dark" : "light";
-  });
   const [isVisible, setIsVisible] = useState(true);
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(() => {
     if (typeof window === "undefined") return false;
@@ -70,8 +63,8 @@ export const GlyphBackground = () => {
           char,
           x,
           y,
-          opacity: theme === "light" ? 0.2 : 0.25,
-          baseOpacity: theme === "light" ? 0.2 : 0.25,
+          opacity: 0.25,
+          baseOpacity: 0.25,
           isAnimating: false,
           animationProgress: 0,
           animationDelay,
@@ -80,7 +73,7 @@ export const GlyphBackground = () => {
     }
 
     return glyphs;
-  }, [dimensions, theme]);
+  }, [dimensions]);
 
   // Update dimensions on resize
   useEffect(() => {
@@ -94,26 +87,6 @@ export const GlyphBackground = () => {
     updateDimensions();
     window.addEventListener("resize", updateDimensions);
     return () => window.removeEventListener("resize", updateDimensions);
-  }, []);
-
-  // Watch for theme changes
-  useEffect(() => {
-    const updateTheme = () => {
-      const isDark =
-        !document.documentElement.hasAttribute("data-theme") ||
-        document.documentElement.getAttribute("data-theme") !== "light";
-      setTheme(isDark ? "dark" : "light");
-    };
-
-    updateTheme();
-
-    const observer = new MutationObserver(updateTheme);
-    observer.observe(document.documentElement, {
-      attributes: true,
-      attributeFilter: ["data-theme"],
-    });
-
-    return () => observer.disconnect();
   }, []);
 
   // Check for reduced motion preference
@@ -159,8 +132,7 @@ export const GlyphBackground = () => {
     // Get CSS color value
     const computedStyle = getComputedStyle(document.documentElement);
     const color =
-      computedStyle.getPropertyValue("--color-fg").trim() ||
-      (theme === "light" ? "#000000" : "#ffffff");
+      computedStyle.getPropertyValue("--color-fg").trim() || "#ffffff";
 
     glyphData.forEach((glyph) => {
       // Static render with base opacity only
@@ -168,7 +140,7 @@ export const GlyphBackground = () => {
       ctx.globalAlpha = glyph.baseOpacity;
       ctx.fillText(glyph.char, glyph.x, glyph.y);
     });
-  }, [glyphData, theme]);
+  }, [glyphData]);
 
   // Canvas rendering function
   const render = useCallback(
@@ -191,8 +163,7 @@ export const GlyphBackground = () => {
       // Get CSS color value
       const computedStyle = getComputedStyle(document.documentElement);
       const color =
-        computedStyle.getPropertyValue("--color-fg").trim() ||
-        (theme === "light" ? "#000000" : "#ffffff");
+        computedStyle.getPropertyValue("--color-fg").trim() || "#ffffff";
 
       glyphData.forEach((glyph) => {
         // Only animate if motion is allowed
@@ -212,7 +183,7 @@ export const GlyphBackground = () => {
             const progress = glyph.animationProgress;
             if (progress < 1) {
               const pulseValue = Math.sin(progress * Math.PI);
-              const maxOpacity = theme === "light" ? 0.5 : 0.5;
+              const maxOpacity = 0.5;
               glyph.opacity =
                 glyph.baseOpacity +
                 (maxOpacity - glyph.baseOpacity) * pulseValue;
@@ -230,7 +201,7 @@ export const GlyphBackground = () => {
         ctx.fillText(glyph.char, glyph.x, glyph.y);
       });
     },
-    [glyphData, theme, isVisible, prefersReducedMotion],
+    [glyphData, isVisible, prefersReducedMotion],
   );
 
   // Animation loop function
@@ -298,10 +269,7 @@ export const GlyphBackground = () => {
       glyphData.forEach((glyph) => {
         const distance = Math.sqrt((glyph.x - x) ** 2 + (glyph.y - y) ** 2);
         if (distance < 50 && !glyph.isAnimating) {
-          glyph.opacity = Math.min(
-            glyph.baseOpacity * 2,
-            theme === "light" ? 0.5 : 0.6,
-          );
+          glyph.opacity = Math.min(glyph.baseOpacity * 2, 0.6);
 
           // Fade back to normal
           setTimeout(() => {
@@ -312,7 +280,7 @@ export const GlyphBackground = () => {
         }
       });
     },
-    [glyphData, theme],
+    [glyphData],
   );
 
   return (
@@ -328,7 +296,7 @@ export const GlyphBackground = () => {
         width: "100%",
         height: "100%",
         pointerEvents: "none",
-        opacity: theme === "light" ? 0.2 : 0.1,
+        opacity: 0.1,
       }}
     />
   );
