@@ -1,5 +1,5 @@
-export { LandingPage } from "./landing-page";
-export { HeroText } from "./hero-text";
-export { CornerDetails } from "./corner-details";
-export { Grain } from "./grain";
-export { GlyphBackground } from "./glyph-background";
+export { LandingPage } from "./landing/landing-page";
+export { HeroText } from "./landing/hero-text";
+export { CornerDetails } from "./landing/corner-details";
+export { Grain } from "./landing/grain";
+export { GlyphBackground } from "./landing/glyph-background";

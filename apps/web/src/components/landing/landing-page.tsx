@@ -1,9 +1,9 @@
 "use client";
 
-import { HeroText } from "./hero-text";
 import { CornerDetails } from "./corner-details";
-import { Grain } from "./grain";
 import { GlyphBackground } from "./glyph-background";
+import { Grain } from "./grain";
+import { HeroText } from "./hero-text";
 import "./landing-page.css";
 
 export const LandingPage = () => {
