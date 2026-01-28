@@ -2,13 +2,22 @@
 # https://lefthook.dev/configuration/
 
 pre-commit:
-  parallel: true
+  parallel: false
   commands:
     format:
       glob: "*.{js,jsx,ts,tsx,json,jsonc,css,html,md}"
-      run: bun x ultracite fix {staged_files}
+      run: bunx ultracite fix {staged_files}
       stage_fixed: true
 
     check:
       glob: "*.{js,jsx,ts,tsx,json,jsonc,css,html,md}"
-      run: bun x ultracite check {staged_files}
+      run: bunx ultracite check {staged_files}
+
+pre-push:
+  parallel: true
+  commands:
+    type-check:
+      run: bun run check-types
+
+    build:
+      run: bun run build
