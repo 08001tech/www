@@ -9,7 +9,7 @@ const CHAR_HEIGHT = 28;
 const LETTER_SPACING = 0.01;
 const ANIMATION_PROBABILITY = 0.005;
 
-type GlyphData = {
+interface GlyphData {
   char: string;
   x: number;
   y: number;
@@ -17,10 +17,12 @@ type GlyphData = {
   baseOpacity: number;
   isAnimating: boolean;
   animationProgress: number;
-};
+}
 
 const generateGlyphData = (width: number, height: number): GlyphData[] => {
-  if (width === 0 || height === 0) return [];
+  if (width === 0 || height === 0) {
+    return [];
+  }
 
   const cols = Math.ceil(width / (CHAR_WIDTH + LETTER_SPACING)) + 2;
   const rows = Math.ceil(height / CHAR_HEIGHT) + 2;
@@ -29,7 +31,7 @@ const generateGlyphData = (width: number, height: number): GlyphData[] => {
   for (let row = 0; row < rows; row++) {
     for (let col = 0; col < cols; col++) {
       const pseudoRandom =
-        Math.abs(Math.sin(row * 12.9898 + col * 78.233)) * 43758.5453;
+        Math.abs(Math.sin(row * 12.9898 + col * 78.233)) * 43_758.5453;
       const offset = Math.floor((pseudoRandom - Math.floor(pseudoRandom)) * 5);
 
       const char = GLYPH_SEQUENCE[offset];
@@ -62,7 +64,9 @@ export const GlyphBackground = () => {
   }));
   const [isVisible, setIsVisible] = useState(true);
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(() => {
-    if (typeof window === "undefined") return false;
+    if (typeof window === "undefined") {
+      return false;
+    }
     return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   });
 
@@ -97,7 +101,9 @@ export const GlyphBackground = () => {
 
   useEffect(() => {
     const canvas = canvasRef.current;
-    if (!canvas) return;
+    if (!canvas) {
+      return;
+    }
 
     const devicePixelRatio = window.devicePixelRatio || 1;
     const { width, height } = dimensions;
@@ -108,18 +114,45 @@ export const GlyphBackground = () => {
     canvas.style.height = `${height}px`;
 
     const ctx = canvas.getContext("2d");
-    if (ctx) ctx.scale(devicePixelRatio, devicePixelRatio);
+    if (ctx) {
+      ctx.scale(devicePixelRatio, devicePixelRatio);
+    }
 
     glyphDataRef.current = generateGlyphData(width, height);
 
+    const updateGlyphAnimation = (glyph: GlyphData) => {
+      if (!glyph.isAnimating && Math.random() < ANIMATION_PROBABILITY) {
+        glyph.isAnimating = true;
+        glyph.animationProgress = 0;
+      }
+
+      if (glyph.isAnimating) {
+        glyph.animationProgress += 0.016;
+
+        if (glyph.animationProgress < 1) {
+          const pulseValue = Math.sin(glyph.animationProgress * Math.PI);
+          const maxOpacity = 0.5;
+          glyph.opacity =
+            glyph.baseOpacity + (maxOpacity - glyph.baseOpacity) * pulseValue;
+        } else {
+          glyph.isAnimating = false;
+          glyph.opacity = glyph.baseOpacity;
+        }
+      }
+    };
+
     const render = () => {
-      if (!canvas || glyphDataRef.current.length === 0) return;
+      if (!canvas || glyphDataRef.current.length === 0) {
+        return;
+      }
       const ctx = canvas.getContext("2d");
-      if (!ctx) return;
+      if (!ctx) {
+        return;
+      }
 
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-      ctx.font = `600 18px var(--font-mono, monospace)`;
+      ctx.font = "600 18px var(--font-mono, monospace)";
       ctx.textBaseline = "alphabetic";
       ctx.imageSmoothingEnabled = false;
 
@@ -127,33 +160,15 @@ export const GlyphBackground = () => {
       const color =
         computedStyle.getPropertyValue("--color-fg").trim() || "#ffffff";
 
-      glyphDataRef.current.forEach((glyph) => {
+      for (const glyph of glyphDataRef.current) {
         if (!prefersReducedMotion && isVisible) {
-          if (!glyph.isAnimating && Math.random() < ANIMATION_PROBABILITY) {
-            glyph.isAnimating = true;
-            glyph.animationProgress = 0;
-          }
-
-          if (glyph.isAnimating) {
-            glyph.animationProgress += 0.016;
-
-            if (glyph.animationProgress < 1) {
-              const pulseValue = Math.sin(glyph.animationProgress * Math.PI);
-              const maxOpacity = 0.5;
-              glyph.opacity =
-                glyph.baseOpacity +
-                (maxOpacity - glyph.baseOpacity) * pulseValue;
-            } else {
-              glyph.isAnimating = false;
-              glyph.opacity = glyph.baseOpacity;
-            }
-          }
+          updateGlyphAnimation(glyph);
         }
 
         ctx.fillStyle = color;
         ctx.globalAlpha = glyph.opacity;
         ctx.fillText(glyph.char, glyph.x, glyph.y);
-      });
+      }
     };
 
     const animate = () => {
@@ -175,7 +190,5 @@ export const GlyphBackground = () => {
     };
   }, [dimensions, isVisible, prefersReducedMotion]);
 
-  return (
-    <canvas ref={canvasRef} className="glyph-background" aria-hidden="true" />
-  );
+  return <canvas className="glyph-background" ref={canvasRef} />;
 };

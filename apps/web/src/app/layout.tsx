@@ -27,10 +27,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`} style={{ "--font-mono": geistMono.style.fontFamily } as React.CSSProperties}>
-        <Providers>
-          {children}
-        </Providers>
+      <body
+        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        style={
+          { "--font-mono": geistMono.style.fontFamily } as React.CSSProperties
+        }
+      >
+        <Providers>{children}</Providers>
       </body>
     </html>
   );

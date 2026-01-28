@@ -8,10 +8,34 @@ export const Grain = () => {
 
   useEffect(() => {
     const grain = grainRef.current;
-    if (!grain) return;
+    if (!grain) {
+      return;
+    }
 
-    const keyframesX = ["0%", "-5%", "-15%", "7%", "-5%", "-15%", "15%", "0%", "3%", "-10%"];
-    const keyframesY = ["0%", "-10%", "5%", "-25%", "25%", "10%", "0%", "15%", "35%", "10%"];
+    const keyframesX = [
+      "0%",
+      "-5%",
+      "-15%",
+      "7%",
+      "-5%",
+      "-15%",
+      "15%",
+      "0%",
+      "3%",
+      "-10%",
+    ];
+    const keyframesY = [
+      "0%",
+      "-10%",
+      "5%",
+      "-25%",
+      "25%",
+      "10%",
+      "0%",
+      "15%",
+      "35%",
+      "10%",
+    ];
     let i = 0;
     const interval = setInterval(() => {
       grain.style.transform = `translate3d(${keyframesX[i % keyframesX.length]}, ${keyframesY[i % keyframesY.length]}, 0)`;
@@ -22,7 +46,7 @@ export const Grain = () => {
 
   return (
     <div className="grain-container">
-      <div ref={grainRef} className="grain-texture" />
+      <div className="grain-texture" ref={grainRef} />
     </div>
   );
 };

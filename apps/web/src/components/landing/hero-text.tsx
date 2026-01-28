@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
 import "./hero-text.css";
 
 const randomRange = (min: number, max: number) =>
@@ -15,7 +15,7 @@ const corruptText = (text: string, intensity: number): string =>
     .map((char) =>
       Math.random() < intensity
         ? GLITCH_CHARS[Math.floor(Math.random() * GLITCH_CHARS.length)]
-        : char,
+        : char
     )
     .join("");
 
@@ -24,7 +24,7 @@ export const HeroText = () => {
   const [corruptedText, setCorruptedText] = useState(ORIGINAL_TEXT);
   const contentRef = useRef<HTMLDivElement>(null);
   const glitchTimeoutRef = useRef<ReturnType<typeof setTimeout> | undefined>(
-    undefined,
+    undefined
   );
 
   useEffect(() => {
@@ -51,15 +51,17 @@ export const HeroText = () => {
 
     return () => {
       clearInterval(interval);
-      if (glitchTimeoutRef.current) clearTimeout(glitchTimeoutRef.current);
+      if (glitchTimeoutRef.current) {
+        clearTimeout(glitchTimeoutRef.current);
+      }
     };
   }, []);
 
   return (
     <div className="hero-text">
       <div
-        ref={contentRef}
         className={`hero-content ${glitchActive ? "glitch-active" : ""}`}
+        ref={contentRef}
       >
         <span className="hero-main">{corruptedText}</span>
       </div>

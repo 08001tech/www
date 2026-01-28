@@ -1,4 +1,4 @@
-import './corner-details.css';
+import "./corner-details.css";
 
 export const CornerDetails = () => {
   return (

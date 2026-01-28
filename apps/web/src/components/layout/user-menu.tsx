@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-
+import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -10,13 +10,11 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { Skeleton } from "@/components/ui/skeleton";
 import { authClient } from "@/lib/auth-client";
 
-import { Button } from "@/components/ui/button";
-import { Skeleton } from "@/components/ui/skeleton";
-
 export default function UserMenu() {
-  const router = useRouter();
+  const _router = useRouter();
   const { data: session, isPending } = authClient.useSession();
 
   if (isPending) {
@@ -42,7 +40,6 @@ export default function UserMenu() {
           <DropdownMenuSeparator />
           <DropdownMenuItem>{session.user.email}</DropdownMenuItem>
           <DropdownMenuItem
-            variant="destructive"
             onClick={() => {
               // AUTH DISABLED: Sign out functionality disabled
               // authClient.signOut({
@@ -52,8 +49,11 @@ export default function UserMenu() {
               //     },
               //   },
               // });
-              console.log("Sign out disabled - authentication is currently off");
+              console.log(
+                "Sign out disabled - authentication is currently off"
+              );
             }}
+            variant="destructive"
           >
             Sign Out
           </DropdownMenuItem>
