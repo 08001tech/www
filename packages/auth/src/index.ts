@@ -1,4 +1,4 @@
-import { env } from "@my-better-t-app/env/server";
+import { env } from "@08001/env/server";
 import { betterAuth } from "better-auth";
 import { nextCookies } from "better-auth/next-js";
 

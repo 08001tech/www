@@ -1,46 +1,75 @@
-# my-better-t-app
+# 08001
 
-This project was created with [Better-T-Stack](https://github.com/AmanVarshney01/create-better-t-stack), a modern TypeScript stack that combines Next.js, Self, and more.
+ALT / ART / TECH - An experimental web experience built with modern TypeScript tools.
 
-## Features
+## Tech Stack
 
-- **TypeScript** - For type safety and improved developer experience
-- **Next.js** - Full-stack React framework
-- **TailwindCSS** - Utility-first CSS for rapid UI development
-- **shadcn/ui** - Reusable UI components
-- **Authentication** - Better-Auth
-- **Turborepo** - Optimized monorepo build system
+- **TypeScript** - Type-safe development
+- **Next.js 16** - React framework with App Router
+- **TailwindCSS v4** - Utility-first CSS
+- **Better-Auth** - Authentication system
+- **Turborepo** - Monorepo build system
+- **Bun** - Fast package manager and runtime
 
 ## Getting Started
 
-First, install the dependencies:
+Install dependencies:
 
 ```bash
 bun install
 ```
 
-Then, run the development server:
+Run the development server:
 
 ```bash
 bun run dev
 ```
 
-Open [http://localhost:3001](http://localhost:3001) in your browser to see the fullstack application.
+Open [http://localhost:3000](http://localhost:3000) to view the application.
 
 ## Project Structure
 
 ```
-my-better-t-app/
+08001/
 ├── apps/
-│   └── web/         # Fullstack application (Next.js)
+│   └── web/              # Next.js application
+│       ├── src/
+│       │   ├── app/      # App Router pages
+│       │   ├── components/
+│       │   │   ├── landing-page.tsx
+│       │   │   ├── glyph-background.tsx
+│       │   │   ├── hero-text.tsx
+│       │   │   ├── grain.tsx
+│       │   │   └── corner-details.tsx
+│       │   └── hooks/
+│       │       └── use-mouse-position.ts
+│       └── public/
+│           ├── framernoise.png
+│           └── static.mp3
 ├── packages/
-│   ├── api/         # API layer / business logic
-│   ├── auth/        # Authentication configuration & logic
-│   └── db/          # Database schema & queries
+│   ├── auth/             # Authentication configuration
+│   ├── config/           # Shared TypeScript config
+│   └── env/              # Environment variables
 ```
 
-## Available Scripts
+## Scripts
 
-- `bun run dev`: Start all applications in development mode
-- `bun run build`: Build all applications
-- `bun run check-types`: Check TypeScript types across all apps
+- `bun run dev` - Start all applications in development mode
+- `bun run dev:web` - Start web app only
+- `bun run build` - Build all applications for production
+- `bun run check-types` - Type check all packages
+
+## Configuration
+
+The project uses workspace packages for shared configuration:
+
+- `@08001/auth` - Better-Auth setup
+- `@08001/config` - TypeScript and build configs
+- `@08001/env` - Environment variable validation with Zod
+
+## Development
+
+The project uses:
+- **Biome** for linting and formatting
+- **Lefthook** for git hooks
+- **Turborepo** for parallel builds and caching

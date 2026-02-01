@@ -1,5 +1,5 @@
 {
-  "name": "@my-better-t-app/auth",
+  "name": "@08001/auth",
   "type": "module",
   "exports": {
     ".": {
@@ -11,13 +11,13 @@
   },
   "scripts": {},
   "dependencies": {
-    "@my-better-t-app/env": "workspace:*",
+    "@08001/env": "workspace:*",
     "better-auth": "catalog:",
     "dotenv": "catalog:",
     "zod": "catalog:"
   },
   "devDependencies": {
-    "@my-better-t-app/config": "workspace:*",
+    "@08001/config": "workspace:*",
     "typescript": "catalog:"
   }
 }

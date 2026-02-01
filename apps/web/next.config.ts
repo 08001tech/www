@@ -1,4 +1,4 @@
-import "@my-better-t-app/env/web";
+import "@08001/env/web";
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {

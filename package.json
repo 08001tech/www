@@ -1,5 +1,5 @@
 {
-  "name": "my-better-t-app",
+  "name": "08001",
   "private": true,
   "workspaces": {
     "packages": [
@@ -22,14 +22,14 @@
     "dev:web": "turbo -F web dev"
   },
   "dependencies": {
-    "@my-better-t-app/env": "workspace:*",
+    "@08001/env": "workspace:*",
     "dotenv": "catalog:",
     "f": "^1.4.0",
     "zod": "catalog:"
   },
   "devDependencies": {
     "@biomejs/biome": "2.3.11",
-    "@my-better-t-app/config": "workspace:*",
+    "@08001/config": "workspace:*",
     "@types/node": "^22.13.14",
     "lefthook": "latest",
     "turbo": "^2.6.3",
