@@ -9,6 +9,8 @@ export const env = createEnv({
     CORS_ORIGIN: z.string().url(),
     GOOGLE_CLIENT_ID: z.string(),
     GOOGLE_CLIENT_SECRET: z.string(),
+    SOUNDCLOUD_CLIENT_ID: z.string(),
+    SOUNDCLOUD_CLIENT_SECRET: z.string(),
     NODE_ENV: z
       .enum(["development", "production", "test"])
       .default("development"),
