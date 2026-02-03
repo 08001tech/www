@@ -1,12 +1,8 @@
-import { Database } from "bun:sqlite";
 import { env } from "@08001/env/server";
 import { betterAuth } from "better-auth";
 import { nextCookies } from "better-auth/next-js";
 
-const db = new Database("auth.db");
-
 export const auth = betterAuth({
-  database: db,
   trustedOrigins: [env.CORS_ORIGIN],
   secret: env.BETTER_AUTH_SECRET,
   baseURL: env.BETTER_AUTH_URL,
