@@ -9,6 +9,7 @@
       "env": [
         "BETTER_AUTH_SECRET",
         "BETTER_AUTH_URL",
+        "BETTER_AUTH_API_KEY",
         "NEXT_PUBLIC_BETTER_AUTH_URL",
         "CORS_ORIGIN",
         "GOOGLE_CLIENT_ID",
