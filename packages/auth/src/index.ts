@@ -1,8 +1,11 @@
 import { env } from "@08001/env/server";
+import { dash } from "@better-auth/infra";
 import { betterAuth } from "better-auth";
 import { nextCookies } from "better-auth/next-js";
 import { genericOAuth } from "better-auth/plugins";
 
+// type error showed up when added dash() plugin with better-auth/infra beta.
+// might autoresolve later.
 export const auth = betterAuth({
   trustedOrigins: [env.CORS_ORIGIN],
   secret: env.BETTER_AUTH_SECRET,
@@ -15,6 +18,7 @@ export const auth = betterAuth({
   },
   plugins: [
     nextCookies(),
+    dash(),
     genericOAuth({
       config: [
         {

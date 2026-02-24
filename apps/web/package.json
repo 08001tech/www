@@ -14,6 +14,7 @@
     "@tanstack/react-form": "^1.27.3",
     "babel-plugin-react-compiler": "^1.0.0",
     "better-auth": "catalog:",
+    "@better-auth/infra": "catalog:",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "dotenv": "catalog:",
