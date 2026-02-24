@@ -11,6 +11,7 @@
   },
   "scripts": {},
   "dependencies": {
+    "@better-auth/infra": "catalog:",
     "@08001/env": "workspace:*",
     "better-auth": "catalog:",
     "dotenv": "catalog:",

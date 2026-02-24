@@ -1,12 +1,45 @@
 import { env } from "@08001/env/server";
+import { dash } from "@better-auth/infra";
 import { betterAuth } from "better-auth";
 import { nextCookies } from "better-auth/next-js";
+import { genericOAuth } from "better-auth/plugins";
 
+// type error showed up when added dash() plugin with better-auth/infra beta.
+// might autoresolve later.
 export const auth = betterAuth({
-  database: "", // Invalid configuration
   trustedOrigins: [env.CORS_ORIGIN],
-  emailAndPassword: {
-    enabled: true,
+  secret: env.BETTER_AUTH_SECRET,
+  baseURL: env.BETTER_AUTH_URL,
+  socialProviders: {
+    google: {
+      clientId: env.GOOGLE_CLIENT_ID,
+      clientSecret: env.GOOGLE_CLIENT_SECRET,
+    },
   },
-  plugins: [nextCookies()],
+  plugins: [
+    nextCookies(),
+    dash(),
+    genericOAuth({
+      config: [
+        {
+          providerId: "soundcloud",
+          clientId: env.SOUNDCLOUD_CLIENT_ID,
+          clientSecret: env.SOUNDCLOUD_CLIENT_SECRET,
+          authorizationUrl: "https://secure.soundcloud.com/authorize",
+          tokenUrl: "https://secure.soundcloud.com/oauth/token",
+          userInfoUrl: "https://api.soundcloud.com/me",
+          pkce: true,
+          mapProfileToUser: (profile) => ({
+            id: String(profile.id),
+            name: profile.username || profile.full_name,
+            email: profile.email,
+            image: profile.avatar_url,
+          }),
+        },
+      ],
+    }),
+  ],
 });
+
+export type Session = typeof auth.$Infer.Session.session;
+export type User = typeof auth.$Infer.Session.user;

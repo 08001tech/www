@@ -12,6 +12,9 @@ build
 .env
 .env*.local
 
+# Better Auth
+auth.db
+
 # IDEs and editors
 .vscode/*
 !.vscode/settings.json
@@ -47,4 +50,4 @@ coverage
 *.tgz
 .cache
 tmp
-temp
+temp.env.local
